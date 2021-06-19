@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package common;
+option go_package = "github.com/gedilabs/services/common";
+
+message Query {
+  string id = 1;
+  ActorType type = 2;
+} 
+
+message Node {
+  string id = 1;
+  string addrs = 2;
+}
+
+enum ActorType {
+	SAT = 0;
+	STOR = 1;
+	ANL = 2;
+	CNTR = 3;
+}
+
+message Status {
+  StatusCode code = 1;
+  enum StatusCode {
+    OK = 0;
+    ERROR = 1;
+  }
+  string msg = 2;
+}
+

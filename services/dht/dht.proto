@@ -1,0 +1,49 @@
+syntax = "proto3";
+option go_package = "github.com/gedilabs/services/dht";
+
+package dht;
+//import "github.com/gedilabs/services/common/common.pb";
+import "common/common.proto";
+
+// Chord implementation of a DHT 
+// Future updates to the DHT algorithm for key lookup implementation 
+// should be changing this particular service in its entirety
+
+message Chord {
+  common.Node node = 1;
+  common.Node successor = 2;
+}
+message Finger {
+  common.Node node = 1;
+  uint64 idx = 2;
+}
+message Empty {
+  bool nil = 1;
+}
+message Key {
+  uint64 id = 1;
+}
+
+service DHT {
+
+  // Ask node n to find id's successor.
+  // This protobuf input message should only have an id.
+  rpc FindSuccessor(Key) returns (common.Node) {}
+
+  // return closest finger preceding id.
+  rpc ClosestPrecedingFinger(Key) returns (Chord) {}
+
+  // Getters/Setters for remote variable lookup and assignment 
+  rpc Predecessor(Empty) returns (common.Node) {}
+
+  rpc Successor(Empty) returns (common.Node) {}
+
+  rpc UpdatePredecessor(common.Node) returns (common.Status) {}
+
+  // Update the given index 'i' in a nodes finger table with `Chord.Node` if they 
+  // precede the current finger node occupying that position.
+  rpc UpdateFingerTable(Finger) returns (common.Status) {}
+
+  // Check if node is predecessor and update accordingly 
+  rpc Notify(common.Node) returns (common.Status) {}
+}

@@ -1,0 +1,20 @@
+syntax = "proto3";
+option go_package = "github.com/gedilabs/services/discovery";
+
+package discovery;
+import "common/common.proto";
+
+service Discovery {
+
+  // Adds new node to the gedi network
+  rpc Add(common.Node) returns (common.Status) {}
+
+  // Returns random user from the gedi network
+  rpc Random(common.Query) returns (common.Node) {}
+
+  // Finds the networking address for a given node id 
+  rpc Find(common.Query) returns (common.Node) {}
+
+  rpc Size(common.Query) returns (int) {}
+
+}

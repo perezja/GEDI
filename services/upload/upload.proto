@@ -1,0 +1,50 @@
+syntax = "proto3"
+option go_package = "github.com/gedilabs/services/upload"
+
+package upload;
+import "common/common.proto"
+
+enum FileType {
+  FASTA = 1;
+  TSV = 2;
+  CSV = 3;
+}
+
+// Information to complete a bucket path 
+message PathAttr {
+  repeated string collection = 1;
+  repeated string component = 2;
+}
+
+message ExtAttr {}
+
+message ChunkInfo {
+  string id = 1;
+  int32 index = 2;
+}
+
+message FileInfo {
+  common.Node owner = 1;
+  string id = 2;
+  FileType file_type = 3;
+  ExtAttr = 4;
+}
+
+message UploadFileRequest {
+  FileInfo file_info = 1;
+  ChunkInfo chunk_info = 2
+  PathAttrib path_attrib = 2;
+  bytes chunk_data = 4;
+}
+message UploadFileResponse {
+}
+
+message UploadChunkResponse {
+}
+
+service Upload {
+}
+
+  // 
+
+}
